@@ -1,3 +1,4 @@
+# Import packages
 import os
 import chromadb
 from dotenv import load_dotenv
@@ -141,5 +142,6 @@ def generate_response(question, relevant_chunks):
 question = "state the Public Financial Management Act 2016 with the PEFA Framework in 100 word limit."
 relevant_chunks = query_documents(question)
 answer = generate_response(question, relevant_chunks)
+
 
 print(answer)
