@@ -33,7 +33,7 @@ resp = client.chat.completions.create(
     ],
 )
 
-# Function to load documents from a directory
+# Function to load documents from a directory(for document ingetion)
 def load_documents_from_directory(directory_path):
     print("==== Loading documents from directory ====")
     documents = []
@@ -73,7 +73,7 @@ for doc in documents:
 # print(f"Split documents into {len(chunked_documents)} chunks")
 
 
-# Function to generate embeddings using OpenAI API
+# ==>Function to generate embeddings using OpenAI API (for Indexing and Storage)<==
 def get_openai_embedding(text):
     response = client.embeddings.create(input=text, model="text-embedding-3-small")
     embedding = response.data[0].embedding
@@ -90,13 +90,13 @@ for doc in chunked_documents:
 
 # Upsert documents with embeddings into Chroma
 for doc in chunked_documents:
-    print("==== Inserting chunks into db;;; ====")
+    print("==== Inserting chunks into db...====")
     collection.upsert(
         ids=[doc["id"]], documents=[doc["text"]], embeddings=[doc["embedding"]]
     )
 
 
-# Function to query documents
+# ==>Function to query documents (for Retrieval)<===
 def query_documents(question, n_results=2):
     # query_embedding = get_openai_embedding(question)
     results = collection.query(query_texts=question, n_results=n_results)
@@ -111,7 +111,7 @@ def query_documents(question, n_results=2):
     #     print(f"Found document chunk: {document} (ID: {doc_id}, Distance: {distance})")
 
 
-# Function to generate a response from OpenAI
+# ==>Function to generate a response from OpenAI (for Generation)<==
 def generate_response(question, relevant_chunks):
     context = "\n\n".join(relevant_chunks)
     prompt = (
@@ -145,3 +145,4 @@ answer = generate_response(question, relevant_chunks)
 
 
 print(answer)
+
