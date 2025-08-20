@@ -23,7 +23,7 @@ def get_response(user_prompt, temperature):
     return response
 
 
-st.title("Hello, what can I help you!")
+st.title("Hello, Let Teach you what I Learn")
 st.write("This is your first Streamlit app.")
 
 # Add a text input box for the user prompt
